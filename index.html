@@ -12,15 +12,15 @@
     <div class="game">
         <div class="paytable">
             <ul class="handlist">
-                <li>ROYAL FLUSH....................</li>
-                <li>STRAIGHT FLUSH.................</li>
-                <li>FOUR OF A KIND.................</li>
-                <li>FULL HOUSE.....................</li>
-                <li>FLUSH..........................</li>
-                <li>STRAIGHT.......................</li>
-                <li>THREE OF A KIND................</li>
-                <li>TWO PAIR.......................</li>
-                <li>JACKS OR BETTER................</li>
+                <li>ROYAL FLUSH--------------------</li>
+                <li>STRAIGHT FLUSH-----------------</li>
+                <li>FOUR OF A KIND-----------------</li>
+                <li>FULL HOUSE---------------------</li>
+                <li>FLUSH--------------------------</li>
+                <li>STRAIGHT-----------------------</li>
+                <li>THREE OF A KIND----------------</li>
+                <li>TWO PAIR-----------------------</li>
+                <li>JACKS OR BETTER----------------</li>
             </ul>
             <ul class="payouts" id="payout1">
                 <li>250</li>
@@ -79,11 +79,11 @@
             </ul>
         </div>
         <div class="holdbar">
-            <span class="hold-label" id="hold1">HOLD</span>
-            <span class="hold-label" id="hold2">HOLD</span>
-            <span class="hold-label" id="hold3">HOLD</span>
-            <span class="hold-label" id="hold4">HOLD</span>
-            <span class="hold-label" id="hold5">HOLD</span>
+            <span class="hold-label" id="hold0" style="display: none;">HOLD</span>
+            <span class="hold-label" id="hold1" style="display: none;">HOLD</span>
+            <span class="hold-label" id="hold2" style="display: none;">HOLD</span>
+            <span class="hold-label" id="hold3" style="display: none;">HOLD</span>
+            <span class="hold-label" id="hold4" style="display: none;">HOLD</span>            
         </div>
         <div class="playfield">            
             <div class="card"></div>
@@ -94,22 +94,22 @@
         </div>
         <div class="textbar">
             <span>
-                <span class="text-lg" id="bet-label" style="margin-right: 10px;">BET 5</span>
+                <span class="text-lg" id="bet-label" style="margin-right: 10px;">BET 0</span>
                 <span class="text-sm" id="game-label">9/6 JACKS OR BETTER</span>
             </span>
             
-            <span class="text-lg" id="credit-label">CREDITS 210</span>
+            <span class="text-lg" id="credit-label">CREDITS 2000</span>
         </div>
         <div class="buttonbar">
-            <div class="btn">HINT</div>
-            <div class="btn">BET ONE</div>
-            <div class="btn">HOLD CANCEL</div>
-            <div class="btn">HOLD CANCEL</div>
-            <div class="btn">HOLD CANCEL</div>
-            <div class="btn">HOLD CANCEL</div>
-            <div class="btn">HOLD CANCEL</div>
-            <div class="btn">MAX BET</div>
-            <div class="btn">DEAL DRAW</div>
+            <div class="btn" id="btn-hint">HINT</div>
+            <div class="btn" id="btn-bet">BET ONE</div>
+            <div class="btn" id="btn-hold0">HOLD CANCEL</div>
+            <div class="btn" id="btn-hold1">HOLD CANCEL</div>
+            <div class="btn" id="btn-hold2">HOLD CANCEL</div>
+            <div class="btn" id="btn-hold3">HOLD CANCEL</div>
+            <div class="btn" id="btn-hold4">HOLD CANCEL</div>
+            <div class="btn" id="btn-max">MAX BET</div>
+            <div class="btn" id="btn-dd">DEAL DRAW</div>
         </div>
     </div>
 </body>
