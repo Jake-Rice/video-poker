@@ -3,29 +3,30 @@ import Deck, { Card } from './deck.js'
 const MAX_BET = 5
 
 let deck, hand, holds
+let gameStarted = false
 let holdsActive = false
 let credits = 2000
 let bet = 0
 
 document.getElementById('btn-bet').addEventListener('click', () => {
-    increaseBet()
+    if (!gameStarted) increaseBet()
 })
 
 document.getElementById('btn-max').addEventListener('click', () => {
-    betMax()
+    if (!gameStarted) betMax()
 })
 
 document.getElementById('btn-dd').addEventListener('click', () => {
     if (bet===0) {
         betMax()
     }    
-    else startGame()
+    else if (!gameStarted) startGame()
 })
 
 for (let i=0; i<5; i++) {
     document.getElementById('btn-hold'+i).addEventListener('click', () => {
         if (holdsActive) {
-            holds[i] = !holds[i];
+            holds[i] = !holds[i]
             document.getElementById('hold'+i).style = (holds[i]) ? '' : 'display: none'
         }
     })
@@ -61,7 +62,8 @@ function startGame() {
     deck = new Deck()
     deck.shuffle()
     hand = [deck.draw(), deck.draw(), deck.draw(), deck.draw(), deck.draw()]
-    holdsActive = true;
+    gameStarted = true
+    holdsActive = true
     
     console.log(hand)
 }
