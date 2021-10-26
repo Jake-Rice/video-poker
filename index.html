@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Video Poker</title>
+    <script src="script.js" type="module"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game">
+        <div class="paytable">
+            <ul class="handlist">
+                <li>ROYAL FLUSH....................</li>
+                <li>STRAIGHT FLUSH.................</li>
+                <li>FOUR OF A KIND.................</li>
+                <li>FULL HOUSE.....................</li>
+                <li>FLUSH..........................</li>
+                <li>STRAIGHT.......................</li>
+                <li>THREE OF A KIND................</li>
+                <li>TWO PAIR.......................</li>
+                <li>JACKS OR BETTER................</li>
+            </ul>
+            <ul class="payouts" id="payout1">
+                <li>250</li>
+                <li>50</li>
+                <li>25</li>
+                <li>9</li>
+                <li>6</li>
+                <li>4</li>
+                <li>3</li>
+                <li>2</li>
+                <li>1</li>
+            </ul>
+            <ul class="payouts" id="payout2">
+                <li>500</li>
+                <li>100</li>
+                <li>50</li>
+                <li>18</li>
+                <li>12</li>
+                <li>8</li>
+                <li>6</li>
+                <li>4</li>
+                <li>2</li>
+            </ul>
+            <ul class="payouts" id="payout3">
+                <li>750</li>
+                <li>150</li>
+                <li>75</li>
+                <li>27</li>
+                <li>18</li>
+                <li>12</li>
+                <li>9</li>
+                <li>6</li>
+                <li>3</li>
+            </ul>
+            <ul class="payouts" id="payout4">
+                <li>1000</li>
+                <li>200</li>
+                <li>100</li>
+                <li>36</li>
+                <li>24</li>
+                <li>16</li>
+                <li>12</li>
+                <li>8</li>
+                <li>4</li>
+            </ul>
+            <ul class="payouts" id="payout5">
+                <li>4000</li>
+                <li>250</li>
+                <li>125</li>
+                <li>45</li>
+                <li>30</li>
+                <li>20</li>
+                <li>15</li>
+                <li>10</li>
+                <li>5</li>
+            </ul>
+        </div>
+        <div class="holdbar">
+            <span class="hold-label" id="hold1">HOLD</span>
+            <span class="hold-label" id="hold2">HOLD</span>
+            <span class="hold-label" id="hold3">HOLD</span>
+            <span class="hold-label" id="hold4">HOLD</span>
+            <span class="hold-label" id="hold5">HOLD</span>
+        </div>
+        <div class="playfield">            
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+            <div class="card"></div>
+        </div>
+        <div class="textbar">
+            <span>
+                <span class="text-lg" id="bet-label" style="margin-right: 10px;">BET 5</span>
+                <span class="text-sm" id="game-label">9/6 JACKS OR BETTER</span>
+            </span>
+            
+            <span class="text-lg" id="credit-label">CREDITS 210</span>
+        </div>
+        <div class="buttonbar">
+            <div class="btn">HINT</div>
+            <div class="btn">BET ONE</div>
+            <div class="btn">HOLD CANCEL</div>
+            <div class="btn">HOLD CANCEL</div>
+            <div class="btn">HOLD CANCEL</div>
+            <div class="btn">HOLD CANCEL</div>
+            <div class="btn">HOLD CANCEL</div>
+            <div class="btn">MAX BET</div>
+            <div class="btn">DEAL DRAW</div>
+        </div>
+    </div>
+</body>
+</html>
