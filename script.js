@@ -21,6 +21,7 @@ const MAX_BET = 5
 let deck, hand, holds
 let gameStarted = false
 let credits = 2000
+let betRelease = false;
 let bet = 0
 
 document.getElementById('btn-bet').addEventListener('click', () => {
@@ -32,9 +33,7 @@ document.getElementById('btn-max').addEventListener('click', () => {
 })
 
 document.getElementById('btn-dd').addEventListener('click', () => {
-    if (bet===0) {
-        betMax()
-    }    
+    if (bet===0) betMax()
     else if (!gameStarted) startGame()
     else {
         gameStarted = false
@@ -42,7 +41,15 @@ document.getElementById('btn-dd').addEventListener('click', () => {
             if (!holds[i]) hand[i] = deck.draw()
             document.getElementById('card'+i).innerText = hand[i].value+hand[i].suit
         }
-        console.log(judgeHand(), calculatePayout(judgeHand()))        
+        let result = judgeHand()
+        if (result !== "nothing") {
+            document.getElementById('win-label').innerText = result.toUpperCase()
+            document.getElementById('win-label').style = ""
+        }
+        credits += calculatePayout(result)
+        document.getElementById('credit-label').innerText = "CREDITS "+credits
+        document.getElementById('btn-bet').style = ""
+        document.getElementById('btn-max').style = ""
     }
 })
 
@@ -53,9 +60,19 @@ for (let i=0; i<5; i++) {
             document.getElementById('hold'+i).style = (holds[i]) ? '' : 'display: none'
         }
     })
+    document.getElementById('card'+i).addEventListener('click', () => {
+        if (gameStarted) {
+            holds[i] = !holds[i]
+            document.getElementById('hold'+i).style = (holds[i]) ? '' : 'display: none'
+        }
+    })
 }
 
 function increaseBet() {
+    if (betRelease) {
+        bet = 0
+        betRelease = false
+    }
     if (bet < MAX_BET && credits > bet) bet++
     document.getElementById('bet-label').innerText = "BET " + bet
     highlightPaytable()
@@ -74,13 +91,17 @@ function betMax() {
 }
 
 function highlightPaytable() {
+    for (let i=1; i<=MAX_BET; i++) document.getElementById('payout'+i).style = ""    
     document.getElementById('payout'+bet).style = "background-color: red;"
-    if (bet>1) document.getElementById('payout'+(bet-1)).style = ""
 }
 
 function startGame() {
     credits -= bet
+    betRelease = true;
     document.getElementById('credit-label').innerText = "CREDITS " + credits
+    document.getElementById('win-label').style = "visibility: hidden;"
+    document.getElementById('btn-bet').style = "visibility: hidden;"
+    document.getElementById('btn-max').style = "visibility: hidden;"
     resetHolds()
     deck = new Deck()
     deck.shuffle()
