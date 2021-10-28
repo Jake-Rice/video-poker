@@ -20,13 +20,13 @@ body {
 
 .paytable {
     display: grid;
-    grid-template-columns: 40% 12% 12% 12% 12% 12%;
+    grid-template-columns: 50% 10% 10% 10% 10% 10%;
     width: 100%;
     height: 28%;
     margin-bottom: 2px;
     border: 1px solid yellow;
     background-color: #333;
-    font-family: Helvetica;
+    font-family: monospace;
     font-weight: bold;
     font-size: 1.6vw;
     text-shadow: 0 0 1px black;
@@ -34,7 +34,7 @@ body {
 
 .paytable ul {
     margin: 0;
-    padding: 1px;
+    padding: 2px;
     list-style: none;    
     color: yellow;  
     border-right: 1px solid yellow;
@@ -121,7 +121,7 @@ body {
     top: 40%;
     height: 20%;
     width: 33%;
-    padding: 2px 3px;
+    padding: auto;
     background-color: blue;
 }
 
@@ -217,7 +217,7 @@ body {
         padding: 12px;
     }
     .paytable {
-        font-size: 15px;
+        font-size: 14px;
     }
     .buttonbar .btn {
         font-size: 17px;
