@@ -37,19 +37,28 @@ document.getElementById('btn-dd').addEventListener('click', () => {
     else if (!gameStarted) startGame()
     else {
         gameStarted = false
-        for (let i=0; i<hand.length; i++) {
-            if (!holds[i]) hand[i] = deck.draw()
-            document.getElementById('card'+i).innerText = hand[i].value+hand[i].suit
-        }
+        displayHand()
         let result = judgeHand()
+        const resultInterval = 500
         if (result !== "nothing") {
-            document.getElementById('win-label').innerText = result.toUpperCase()
-            document.getElementById('win-label').style = ""
+            setTimeout(()=> {
+                document.getElementById('win-label').innerText = result.toUpperCase()
+                document.getElementById('win-label').style = ""
+            }, resultInterval)
         }
-        credits += calculatePayout(result)
+        let winnings = calculatePayout(result)
+        const interval = 100;
+        const startInterval = 1000
+        for (let i=0; i<winnings; i++) {            
+            setTimeout(()=> { 
+                credits++
+                document.getElementById('credit-label').innerText = "CREDITS "+credits
+            }, interval*i + startInterval)
+        }
         document.getElementById('credit-label').innerText = "CREDITS "+credits
         document.getElementById('btn-bet').style = ""
         document.getElementById('btn-max').style = ""
+        setTimeout(()=> { document.getElementById('game-over').style = "" }, 500)
     }
 })
 
@@ -102,6 +111,7 @@ function startGame() {
     document.getElementById('win-label').style = "visibility: hidden;"
     document.getElementById('btn-bet').style = "visibility: hidden;"
     document.getElementById('btn-max').style = "visibility: hidden;"
+    document.getElementById('game-over').style = "visibility: hidden;"
     resetHolds()
     deck = new Deck()
     deck.shuffle()
@@ -122,10 +132,39 @@ function startGame() {
 
     gameStarted = true
     
-    hand.forEach((card, pos) => {
-        document.getElementById('card'+pos).innerText = card.value+card.suit
-        document.getElementById('card'+pos).style = "font-family: monospace; font-size: 60px;"
-    })    
+    displayHand()   
+}
+
+function displayHand() {
+    const interval = 100
+    let time = interval
+    for (let i=0; i<hand.length; i++) {
+        if (!holds[i]) {
+            hand[i] = deck.draw()
+            let imgSrc = "img/"
+            switch (hand[i].suit) {
+                case "♠":
+                    imgSrc+="SPADE-"
+                    break
+                case "♣":
+                    imgSrc+="CLUB-"
+                    break
+                case "♥":
+                    imgSrc+="HEART-"
+                    break
+                case "♦":
+                    imgSrc+="DIAMOND-"
+                    break
+            }
+            imgSrc += VALUE_ORDER[hand[i].value]
+            if (VALUE_ORDER[hand[i].value] === 11) imgSrc += "-JACK"
+            else if (VALUE_ORDER[hand[i].value] === 12) imgSrc += "-QUEEN"
+            else if (VALUE_ORDER[hand[i].value] === 13) imgSrc += "-KING"
+            imgSrc += ".svg"
+            setTimeout(() => { document.getElementById('card'+i).src = imgSrc }, time)
+            time+=interval
+        }
+    }
 }
 
 function resetHolds() {
