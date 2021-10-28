@@ -28,7 +28,7 @@ body {
     background-color: #333;
     font-family: Helvetica;
     font-weight: bold;
-    font-size: 1.7vw;
+    font-size: 1.6vw;
     text-shadow: 0 0 1px black;
 }
 
@@ -38,10 +38,6 @@ body {
     list-style: none;    
     color: yellow;  
     border-right: 1px solid yellow;
-}
-
-.payouts {
-    
 }
 
 #payout5 {
@@ -120,7 +116,6 @@ body {
 
 .game-over {
     position: absolute;
-    display: grid;
     justify-self: center;
     text-align: center;
     top: 40%;
@@ -128,10 +123,6 @@ body {
     width: 33%;
     padding: 2px 3px;
     background-color: blue;
-}
-
-.game-over span {
-    vertical-align: middle;
 }
 
 .card {    
