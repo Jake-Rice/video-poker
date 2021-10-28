@@ -26,9 +26,9 @@ body {
     margin-bottom: 2px;
     border: 1px solid yellow;
     background-color: #333;
-    font-family: sans-serif;
+    font-family: Helvetica;
     font-weight: bold;
-    font-size: 1.75vw;
+    font-size: 1.7vw;
     text-shadow: 0 0 1px black;
 }
 
@@ -41,7 +41,7 @@ body {
 }
 
 .payouts {
-    font-family: sans-serif;
+    
 }
 
 #payout5 {
