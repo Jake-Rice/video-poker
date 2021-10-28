@@ -120,6 +120,7 @@ body {
 
 .game-over {
     position: absolute;
+    display: grid;
     justify-self: center;
     text-align: center;
     top: 40%;
