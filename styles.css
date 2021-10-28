@@ -130,15 +130,40 @@ body {
 }
 
 .textbar {
-    display: flex;
+    display: grid;
+    grid-template-columns: 14% 26% 20% 40%;
     width: 100%;
     height: 45px;
     margin-bottom: 10px;
-    justify-content: space-between;
 }
 
 .textbar span {
-    align-self: flex-end;
+    width: 100%;
+    align-self: baseline;
+}
+
+#bet-label {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    text-align: left;
+}
+
+#game-label {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    text-align: left;
+}
+
+#winnings-label {
+    grid-column-start: 3;
+    grid-column-end: 4;
+    text-align: center;
+}
+
+#credit-label {
+    grid-column-start: 4;
+    grid-column-end: 5;
+    text-align: right;
 }
 
 .text-lg {

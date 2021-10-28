@@ -23,54 +23,63 @@ let gameStarted = false
 let credits = 2000
 let betRelease = false;
 let bet = 0
+let freeze = false;
 
 document.getElementById('btn-bet').addEventListener('click', () => {
-    if (!gameStarted) increaseBet()
+    if (!freeze && !gameStarted) increaseBet()
 })
 
 document.getElementById('btn-max').addEventListener('click', () => {
-    if (!gameStarted) betMax()
+    if (!freeze && !gameStarted) betMax()
 })
 
 document.getElementById('btn-dd').addEventListener('click', () => {
-    if (bet===0) betMax()
-    else if (!gameStarted) startGame()
-    else {
-        gameStarted = false
-        displayHand()
-        let result = judgeHand()
-        const resultInterval = 500
-        if (result !== "nothing") {
+    if (!freeze) {
+        if (bet===0) betMax()
+        else if (!gameStarted) startGame()
+        else {
+            gameStarted = false
+            displayHand()
+            let result = judgeHand()
+            const resultInterval = 500
+            if (result !== "nothing") {
+                setTimeout(()=> {
+                    document.getElementById('win-label').innerText = result.toUpperCase()
+                    document.getElementById('win-label').style = ""
+                    document.getElementById('winnings-label').style = "width: 100%; justify-text: center;"
+                    document.getElementById('winnings-label').innerText = "WIN "+winnings
+                }, resultInterval)
+            }
+            let winnings = calculatePayout(result)        
+            const interval = (winnings <= 20) ? 100 : 2000/winnings;
+            const startInterval = 1000
+            freeze = true
+            for (let i=0; i<winnings; i++) {            
+                setTimeout(()=> { 
+                    credits++
+                    document.getElementById('credit-label').innerText = "CREDITS "+credits
+                }, interval*i + startInterval)
+            }
+            document.getElementById('credit-label').innerText = "CREDITS "+credits
+            document.getElementById('btn-bet').style = ""
+            document.getElementById('btn-max').style = ""
             setTimeout(()=> {
-                document.getElementById('win-label').innerText = result.toUpperCase()
-                document.getElementById('win-label').style = ""
-            }, resultInterval)
+                document.getElementById('game-over').style = ""
+                freeze = false;
+            }, startInterval + (interval*winnings))
         }
-        let winnings = calculatePayout(result)
-        const interval = 100;
-        const startInterval = 1000
-        for (let i=0; i<winnings; i++) {            
-            setTimeout(()=> { 
-                credits++
-                document.getElementById('credit-label').innerText = "CREDITS "+credits
-            }, interval*i + startInterval)
-        }
-        document.getElementById('credit-label').innerText = "CREDITS "+credits
-        document.getElementById('btn-bet').style = ""
-        document.getElementById('btn-max').style = ""
-        setTimeout(()=> { document.getElementById('game-over').style = "" }, 500)
     }
 })
 
 for (let i=0; i<5; i++) {
     document.getElementById('btn-hold'+i).addEventListener('click', () => {
-        if (gameStarted) {
+        if (!freeze && gameStarted) {
             holds[i] = !holds[i]
             document.getElementById('hold'+i).style = (holds[i]) ? '' : 'display: none'
         }
     })
     document.getElementById('card'+i).addEventListener('click', () => {
-        if (gameStarted) {
+        if (!freeze && gameStarted) {
             holds[i] = !holds[i]
             document.getElementById('hold'+i).style = (holds[i]) ? '' : 'display: none'
         }
@@ -112,12 +121,16 @@ function startGame() {
     document.getElementById('btn-bet').style = "visibility: hidden;"
     document.getElementById('btn-max').style = "visibility: hidden;"
     document.getElementById('game-over').style = "visibility: hidden;"
+    document.getElementById('winnings-label').style = "visibility: hidden;"
+    
+    for (let i=0; i<=4; i++) document.getElementById('card'+i).src="img/Card-Back.png"
+    
     resetHolds()
     deck = new Deck()
     deck.shuffle()
 
     hand = [deck.draw(), deck.draw(), deck.draw(), deck.draw(), deck.draw()]
-
+    console.log(hand)
     //TEST HANDS - uncomment to use
     //hand = [new Card("♠","A"), new Card("♠","10"), new Card("♠","Q"), new Card("♠","J"), new Card("♠","K")] //royal flush
     //hand = [new Card("♠","9"), new Card("♠","10"), new Card("♠","Q"), new Card("♠","J"), new Card("♠","K")] //straight flush
@@ -136,11 +149,12 @@ function startGame() {
 }
 
 function displayHand() {
+    freeze = true;
     const interval = 100
     let time = interval
     for (let i=0; i<hand.length; i++) {
         if (!holds[i]) {
-            hand[i] = deck.draw()
+            if (!gameStarted) hand[i] = deck.draw()
             let imgSrc = "img/"
             switch (hand[i].suit) {
                 case "♠":
@@ -161,7 +175,10 @@ function displayHand() {
             else if (VALUE_ORDER[hand[i].value] === 12) imgSrc += "-QUEEN"
             else if (VALUE_ORDER[hand[i].value] === 13) imgSrc += "-KING"
             imgSrc += ".svg"
-            setTimeout(() => { document.getElementById('card'+i).src = imgSrc }, time)
+            setTimeout(() => {
+                document.getElementById('card'+i).src = imgSrc
+                if (gameStarted && i===hand.length-1) freeze=false;
+            }, time)
             time+=interval
         }
     }
