@@ -21,9 +21,27 @@ const MAX_BET = 5
 let deck, hand, holds
 let gameStarted = false
 let credits = 2000
-let betRelease = false;
+let betRelease = false
 let bet = 0
-let freeze = false;
+let freeze = false
+let hintOn = false
+
+document.getElementById('btn-hint').addEventListener('click', () => {
+    if(!freeze && gameStarted) {
+        if (!hintOn) {
+            hintOn = true
+            highlightCard(0)
+            highlightCard(1)
+            highlightCard(2)
+            highlightCard(3)
+            highlightCard(4)
+        }
+        else {
+            hintOn = false
+            clearHint()
+        }
+    }
+})
 
 document.getElementById('btn-bet').addEventListener('click', () => {
     if (!freeze && !gameStarted) increaseBet()
@@ -39,6 +57,7 @@ document.getElementById('btn-dd').addEventListener('click', () => {
         else if (!gameStarted) startGame()
         else {
             gameStarted = false
+            if (hintOn) clearHint()
             displayHand()
             let result = judgeHand()
             const resultInterval = 500
@@ -116,6 +135,7 @@ function highlightPaytable() {
 function startGame() {
     credits -= bet
     betRelease = true;
+    
     document.getElementById('credit-label').innerText = "CREDITS " + credits
     document.getElementById('win-label').style = "visibility: hidden;"
     document.getElementById('btn-bet').style = "visibility: hidden;"
@@ -123,14 +143,12 @@ function startGame() {
     document.getElementById('game-over').style = "visibility: hidden;"
     document.getElementById('winnings-label').style = "visibility: hidden;"
     
-    for (let i=0; i<=4; i++) document.getElementById('card'+i).src="img/Card-Back.png"
-    
     resetHolds()
     deck = new Deck()
     deck.shuffle()
 
     hand = [deck.draw(), deck.draw(), deck.draw(), deck.draw(), deck.draw()]
-    console.log(hand)
+
     //TEST HANDS - uncomment to use
     //hand = [new Card("♠","A"), new Card("♠","10"), new Card("♠","Q"), new Card("♠","J"), new Card("♠","K")] //royal flush
     //hand = [new Card("♠","9"), new Card("♠","10"), new Card("♠","Q"), new Card("♠","J"), new Card("♠","K")] //straight flush
@@ -152,6 +170,7 @@ function displayHand() {
     freeze = true;
     const interval = 100
     let time = interval
+    for (let i=0; i<hand.length; i++) if (!holds[i]) document.getElementById('card'+i).src="img/Card-Back.png"
     for (let i=0; i<hand.length; i++) {
         if (!holds[i]) {
             if (!gameStarted) hand[i] = deck.draw()
@@ -276,4 +295,12 @@ function calculatePayout(strHand) {
         "nothing": 0
     }
     return HAND_SCORES[strHand]
+}
+
+function highlightCard(num) {
+    document.getElementById('card'+num).style = "box-shadow:0 0 0 1px black, 0 0 0 5px yellow; border-radius: 7px;"
+}
+
+function clearHint() {
+    for (let i=0; i<hand.length; i++) document.getElementById('card'+i).style = ""
 }
