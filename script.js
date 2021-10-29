@@ -16,6 +16,18 @@ const VALUE_ORDER = {
     "K": 13
 }
 
+const suits = ["♠","♣","♥","♦"]
+
+Object.keys(VALUE_ORDER).forEach(v => {
+    suits.forEach(s => {
+        const linkEl = document.createElement('link');
+        linkEl.setAttribute('rel', 'preload');
+        linkEl.setAttribute('href', imgFileString(s, v));
+        linkEl.setAttribute('as', 'image');
+        document.head.appendChild(linkEl);
+    })
+})
+
 const MAX_BET = 5
 
 let deck, hand, holds
@@ -174,28 +186,9 @@ function displayHand() {
     for (let i=0; i<hand.length; i++) {
         if (!holds[i]) {
             if (!gameStarted) hand[i] = deck.draw()
-            let imgSrc = "img/"
-            switch (hand[i].suit) {
-                case "♠":
-                    imgSrc+="SPADE-"
-                    break
-                case "♣":
-                    imgSrc+="CLUB-"
-                    break
-                case "♥":
-                    imgSrc+="HEART-"
-                    break
-                case "♦":
-                    imgSrc+="DIAMOND-"
-                    break
-            }
-            imgSrc += VALUE_ORDER[hand[i].value]
-            if (VALUE_ORDER[hand[i].value] === 11) imgSrc += "-JACK"
-            else if (VALUE_ORDER[hand[i].value] === 12) imgSrc += "-QUEEN"
-            else if (VALUE_ORDER[hand[i].value] === 13) imgSrc += "-KING"
-            imgSrc += ".png"
+            
             setTimeout(() => {
-                document.getElementById('card'+i).src = imgSrc
+                document.getElementById('card'+i).src = imgFileString(hand[i].suit, hand[i].value)
                 if (gameStarted && i===hand.length-1) freeze=false;
             }, time)
             time+=interval
@@ -303,4 +296,28 @@ function highlightCard(num) {
 
 function clearHint() {
     for (let i=0; i<hand.length; i++) document.getElementById('card'+i).style = ""
+}
+
+function imgFileString(s, v) {
+    let imgSrc = "img/"
+    switch (s) {
+        case "♠":
+            imgSrc+="SPADE-"
+            break
+        case "♣":
+            imgSrc+="CLUB-"
+            break
+        case "♥":
+            imgSrc+="HEART-"
+            break
+        case "♦":
+            imgSrc+="DIAMOND-"
+            break
+    }
+    imgSrc += VALUE_ORDER[v]
+    if (VALUE_ORDER[v] === 11) imgSrc += "-JACK"
+    else if (VALUE_ORDER[v] === 12) imgSrc += "-QUEEN"
+    else if (VALUE_ORDER[v] === 13) imgSrc += "-KING"
+    imgSrc += ".png"
+    return imgSrc
 }
