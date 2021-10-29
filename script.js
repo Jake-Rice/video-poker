@@ -193,7 +193,7 @@ function displayHand() {
             if (VALUE_ORDER[hand[i].value] === 11) imgSrc += "-JACK"
             else if (VALUE_ORDER[hand[i].value] === 12) imgSrc += "-QUEEN"
             else if (VALUE_ORDER[hand[i].value] === 13) imgSrc += "-KING"
-            imgSrc += ".svg"
+            imgSrc += ".png"
             setTimeout(() => {
                 document.getElementById('card'+i).src = imgSrc
                 if (gameStarted && i===hand.length-1) freeze=false;
